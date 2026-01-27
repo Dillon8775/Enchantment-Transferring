@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": "minecraft:book",
+    "E": "minecraft:enchanting_table",
+    "L": "minecraft:lapis_block"
+  },
+  "pattern": [
+    " B ",
+    " L ",
+    " E "
+  ],
+  "result": {
+    "count": 1,
+    "id": "enchantmenttransferring:enchantment_transferrer"
+  }
+}

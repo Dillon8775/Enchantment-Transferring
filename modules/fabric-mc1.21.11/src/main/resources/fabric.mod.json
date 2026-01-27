@@ -1,41 +1,42 @@
 {
   "schemaVersion": 1,
-  "id": "et",
+  "id": "enchantmenttransferring",
   "version": "1.0+mc1.21.11",
   "name": "Enchantment Transferring",
   "description": "Adds a block which lets you transfer enchantments from one item to another.",
-  "accessWidener": "et.accessWidener",
+  "accessWidener": "enchantmenttransferring.accessWidener",
   "authors": [
     "Dillon8775"
   ],
   "contact": {
-    "homepage": "https://sites.google.com/view/dillon8775",
-    "sources": ""
+    "homepage": "https://modrinth.com/mod/enchantment-transferring",
+    "sources": "https://github.com/Dillon8775/Enchantment-Transferring",
+    "issues": "https://github.com/Dillon8775/Enchantment-Transferring/issues"
   },
   "license": "All rights reserved.",
-  "icon": "assets/et/icon.png",
+  "icon": "assets/enchantmenttransferring/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.dillon.et.main.ET"
+      "net.dillon.enchantmenttransferring.main.ET"
     ],
     "client": [
-      "net.dillon.et.ETClient"
+      "net.dillon.enchantmenttransferring.ETClient"
     ],
     "fabric-datagen": [
-      "net.dillon.et.data.generator.ETDataGenerator"
+      "net.dillon.enchantmenttransferring.data.generator.EnchantmentTransferringDataGenerator"
     ]
   },
   "mixins": [
-    "et.mixins.json",
+    "enchantmenttransferring.mixins.json",
     {
-      "config": "et.client.mixins.json",
+      "config": "enchantmenttransferring.client.mixins.json",
       "environment": "client"
     }
   ],
   "depends": {
-    "fabricloader": ">=0.17.2",
-    "minecraft": ">=1.21.9",
+    "fabricloader": ">=0.18.4",
+    "minecraft": "1.21.11",
     "java": ">=21",
     "fabric-api": "*"
   }

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "enchantmenttransferring:block/enchantment_transferrer"
+    }
+  }
+}

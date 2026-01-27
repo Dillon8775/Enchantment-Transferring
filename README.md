@@ -40,6 +40,13 @@ The cost is calculated by taking the total amount of transferred enchantments, a
 
 The output durability is calculated by taking the item's current durability and dividing it by (1, PLUS -> each enchantment's level represents an additional .1 point. So fortune 3 would be 1.3, Efficiency 5 would be 1.5, etc.).
 
+# Crafting recipe:
+
+<a href="https://i.imgur.com/VCXCTPV.png" target="_blank">
+  <img src="https://i.imgur.com/VCXCTPV.png" width="640" height="360" alt="Compatible with Forge">
+</a>
+
+
 #### (since: v1.0)
 
 ---

@@ -20,7 +20,7 @@ loom {
 	splitEnvironmentSourceSets()
 
 	mods {
-		"et" {
+		"enchantmenttransferring" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}
@@ -35,7 +35,7 @@ loom {
 		}
 	}
 
-    accessWidenerPath = file("src/main/resources/et.accessWidener")
+    accessWidenerPath = file("src/main/resources/enchantmenttransferring.accessWidener")
 }
 
 fabricApi {

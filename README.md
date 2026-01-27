@@ -42,8 +42,8 @@ The output durability is calculated by taking the item's current durability and 
 
 # Crafting recipe:
 
-<a href="https://i.imgur.com/VCXCTPV.png" target="_blank">
-  <img src="https://i.imgur.com/VCXCTPV.png" width="640" height="360" alt="Compatible with Forge">
+<a href="https://i.imgur.com/qjcWq7s.png" target="_blank">
+  <img src="https://i.imgur.com/qjcWq7s.png" width="640" height="360" alt="Compatible with Forge">
 </a>
 
 

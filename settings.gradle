@@ -22,9 +22,10 @@ rootProject.name = 'Enchantment Transferring'
 include "modules:common"
 
 // === FABRIC ===
-include "modules:fabric-mc1.21.9x"
+include "modules:fabric-mc1.21.11"
 
 // === FORGE ===
+include "modules:forge-mc1.21.11"
 
 // ----------
 

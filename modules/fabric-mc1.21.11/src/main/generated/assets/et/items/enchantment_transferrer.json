@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "et:block/enchantment_transferrer"
+  }
+}

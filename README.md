@@ -36,6 +36,8 @@ As a result, your enchantments will be transferred to your desired item, but you
   <img src="https://github.com/Dillon8775/ImageGIFs/blob/enchantment-transferring/Using%20the%20Enchantment%20Transferrer.gif?raw=true" width="640" height="360" alt="Compatible with Forge">
 </a>
 
+####
+
 The cost is calculated by taking the total amount of transferred enchantments, and then adding each transferred enchantment's level to the cost.
 
 The output durability is calculated by taking the item's current durability and dividing it by (1, PLUS -> each enchantment's level represents an additional .1 point. So fortune 3 would be 1.3, Efficiency 5 would be 1.5, etc.).

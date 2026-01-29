@@ -33,7 +33,7 @@ If you decide to play the mod on an older version of the game, please note that 
 As a result, your enchantments will be transferred to your desired item, but your item will take a hit of durability.
 
 <a href="https://cdn.discordapp.com/attachments/1466497379476705310/1466498328710742173/o1C0UWA.gif?ex=697cf67f&is=697ba4ff&hm=3ef7d08b8aa926bc2ac4ff12cfb768523baa8a479a0a038e87681c9c10694b89&" target="_blank">
-  <img src="https://cdn.discordapp.com/attachments/1466497379476705310/1466498328710742173/o1C0UWA.gif?ex=697cf67f&is=697ba4ff&hm=3ef7d08b8aa926bc2ac4ff12cfb768523baa8a479a0a038e87681c9c10694b89&" width="640" height="360" alt="Compatible with Forge">
+  <img src="https://github.com/Dillon8775/ImageGIFs/blob/enchantment-transferring/Using%20the%20Enchantment%20Transferrer.gif?raw=true" width="640" height="360" alt="Compatible with Forge">
 </a>
 
 The cost is calculated by taking the total amount of transferred enchantments, and then adding each transferred enchantment's level to the cost.
@@ -43,7 +43,7 @@ The output durability is calculated by taking the item's current durability and 
 # Crafting recipe:
 
 <a href="https://cdn.discordapp.com/attachments/1466497379476705310/1466498353402740941/qjcWq7s.png?ex=697cf685&is=697ba505&hm=30b6ad1630b29d145dae97aa419b1528a2fd0499541f43a5fbaabd1516e115e8&" target="_blank">
-  <img src="https://cdn.discordapp.com/attachments/1466497379476705310/1466498353402740941/qjcWq7s.png?ex=697cf685&is=697ba505&hm=30b6ad1630b29d145dae97aa419b1528a2fd0499541f43a5fbaabd1516e115e8&" width="640" height="360" alt="Compatible with Forge">
+  <img src="https://github.com/Dillon8775/ImageGIFs/blob/enchantment-transferring/Crafting%20Recipe.png?raw=true" width="640" height="360" alt="Compatible with Forge">
 </a>
 
 

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "enchantmenttransferring",
+  "version": "1.0.1",
+  "name": "Enchantment Transferring",
+  "description": "Transfer enchantments from one item, to another!",
+  "authors": [
+    "Dillon8775"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/enchantment-transferring",
+    "sources": "https://github.com/Dillon8775/Enchantment-Transferring",
+    "issues": "https://github.com/Dillon8775/Enchantment-Transferring/issues"
+  },
+  "license": "All rights reserved.",
+  "icon": "assets/enchantmenttransferring/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.dillon.enchantmenttransferring.EnchantmentTransferrer"
+    ],
+    "client": [
+      "net.dillon.enchantmenttransferring.ClientEnchantmentTransferrer"
+    ],
+    "fabric-datagen": [
+      "net.dillon.enchantmenttransferring.datagen.EnchantmentTransferringDataGenerator"
+    ]
+  },
+  "mixins": [
+    "enchantmenttransferring.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.2",
+    "minecraft": ">=26.1.2",
+    "java": ">=25",
+    "fabric-api": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/vfqEAn4YFy"
+      }
+    }
+  }
+}

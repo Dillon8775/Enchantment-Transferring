@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": "minecraft:book",
+    "B": "minecraft:lapis_block",
+    "E": "minecraft:enchanting_table"
+  },
+  "pattern": [
+    "L",
+    "B",
+    "E"
+  ],
+  "result": {
+    "id": "enchantmenttransferring:enchantment_transferrer"
+  }
+}

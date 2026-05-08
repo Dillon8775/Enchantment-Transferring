@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.dillon.enchantmenttransferring.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "accessor.ItemsAccessor"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

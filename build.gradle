@@ -11,6 +11,9 @@ plugins {
 version = project.mod_version
 group = project.maven_group
 
+def modVersion = project.mod_version.toString()
+def modVersionWithoutSuffix = modVersion.contains("_") ? modVersion.substring(0, modVersion.indexOf("_")) : modVersion
+
 repositories {
 	// Add repositories to retrieve artifacts from in here.
 	// You should only use this when depending on other mods because
@@ -48,11 +51,12 @@ dependencies {
 }
 
 processResources {
-	def version = project.version
-	inputs.property "version", version
+	inputs.property "mod_version", modVersionWithoutSuffix
+	inputs.property "mc_version", project.mc_version
 
 	filesMatching("fabric.mod.json") {
-		expand "version": version
+		expand "mod_version": modVersionWithoutSuffix,
+				"mc_version": project.mc_version
 	}
 }
 
@@ -109,7 +113,7 @@ tasks.register('curseforge', TaskPublishCurseForge) {
 	}
 	if (projectId) {
 		def mainFile = upload(findProperty("curseforge_project_id"), tasks.named("jar", Jar).get().archiveFile.get().asFile)
-		mainFile.displayName = "[${mc_version.substring(2)}] $mod_name ${mod_version_raw}"
+		mainFile.displayName = "[${mc_version.substring(2)}] $mod_name ${modVersionWithoutSuffix}"
 		mainFile.changelog = rootProject.file("${changelog_file}").text
 		mainFile.addRequirement("fabric-api")
 		def supportedVersions = supported_mc_versions
@@ -127,8 +131,8 @@ modrinth {
 	token = project.findProperty("modrinth.token") ?: System.getenv("MODRINTH_TOKEN") ?: "none"
 	projectId = findProperty("modrinth_project_id")
 
-	versionNumber = project.mod_version_raw.toString()
-	versionName = "[mc${minecraft_version}] ${mod_name} ${project.mod_version_raw}"
+	versionNumber = modVersionWithoutSuffix
+	versionName = "[mc${minecraft_version}] ${mod_name} ${modVersionWithoutSuffix}"
 
 	uploadFile = tasks.named("jar")
 	def changelogFile = rootProject.file("${changelog_file}")

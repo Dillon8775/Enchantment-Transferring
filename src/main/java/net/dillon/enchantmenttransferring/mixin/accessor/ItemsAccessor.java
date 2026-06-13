@@ -1,5 +1,6 @@
 package net.dillon.enchantmenttransferring.mixin.accessor;
 
+import net.minecraft.references.BlockItemId;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -9,7 +10,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(Items.class)
 public interface ItemsAccessor {
     @Invoker("registerBlock")
-    static Item invokeRegisterBlock(Block block, Item.Properties properties) {
+    static Item invokeRegisterBlock(final BlockItemId id, Block block, Item.Properties properties) {
         throw new AssertionError();
     }
 }

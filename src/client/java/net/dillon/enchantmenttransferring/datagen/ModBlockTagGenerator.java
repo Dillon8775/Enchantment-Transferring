@@ -1,6 +1,6 @@
 package net.dillon.enchantmenttransferring.datagen;
 
-import net.dillon.enchantmenttransferring.block.ModBlocks;
+import net.dillon.enchantmenttransferring.block.ModBlockIds;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup;
@@ -16,6 +16,7 @@ public class ModBlockTagGenerator extends FabricTagsProvider.BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider registries) {
-        valueLookupBuilder(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.ENCHANTMENT_TRANSFERRER);
+        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(ModBlockIds.ENCHANTMENT_TRANSFERRER.block());
     }
 }

@@ -34,6 +34,6 @@ public class ModBlocks {
     }
 
     public static void registerBlocks() {
-        ItemsAccessor.invokeRegisterBlock(ModBlocks.ENCHANTMENT_TRANSFERRER, new Item.Properties());
+        ItemsAccessor.invokeRegisterBlock(ModBlockIds.ENCHANTMENT_TRANSFERRER, ModBlocks.ENCHANTMENT_TRANSFERRER, new Item.Properties());
     }
 }

@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.BlockTags;
+import org.jspecify.annotations.NonNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -15,7 +16,7 @@ public class ModBlockTagGenerator extends FabricTagsProvider.BlockTagsProvider {
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider registries) {
+    protected void addTags(HolderLookup.@NonNull Provider registries) {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlockIds.ENCHANTMENT_TRANSFERRER.block());
     }

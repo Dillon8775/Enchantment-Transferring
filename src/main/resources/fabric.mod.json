@@ -17,10 +17,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.dillon.enchantmenttransferring.EnchantmentTransferrer"
+      "net.dillon.enchantmenttransferring.main.EtInitializer"
     ],
     "client": [
-      "net.dillon.enchantmenttransferring.ClientEnchantmentTransferrer"
+      "net.dillon.enchantmenttransferring.main.EtClientInitializer"
     ],
     "fabric-datagen": [
       "net.dillon.enchantmenttransferring.datagen.EnchantmentTransferringDataGenerator"
@@ -30,10 +30,11 @@
     "enchantmenttransferring.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.19.2",
+    "fabricloader": ">=0.19.3",
     "minecraft": ">=26.2-rc.1",
     "java": ">=25",
-    "fabric-api": "*"
+    "fabric-api": "*",
+    "dillonlib": ">=${dillonlib_version}"
   },
   "custom": {
     "modmenu": {

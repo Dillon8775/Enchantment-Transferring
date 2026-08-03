@@ -1,7 +1,14 @@
 {
+  "itemGroup.enchantmenttransferring.enchantment_transferring_item_group": "Enchantment Transferring",
+
   "enchantment_transferring_item_group": "Enchantment Transferring",
   "block.enchantmenttransferring.enchantment_transferrer": "Enchantment Transferrer",
-  "block.enchantmenttransferring.enchantment_transferrer.enchanted_tool": "Add item with enchantments that you want to transfer over.",
-  "block.enchantmenttransferring.enchantment_transferrer.unenchanted_tool": "Add item that you want enchantments transferred to.",
-  "block.enchantmenttransferring.enchantment_transferrer.cost": "Cost: %s"
+
+  "block.enchantmenttransferring.cost": "Cost: %s",
+  "block.enchantmenttransferring.enchanted_tool": "Add item with enchantments that you want to transfer over.",
+  "block.enchantmenttransferring.unenchanted_tool_or_book": "Add item (or book) that you want to transfer enchantments to.",
+  "block.enchantmenttransferring.smithing_template": "§bAdd diamond §bto neglect durability damage.",
+
+  "enchantmenttransferrering.gui.use_transfer": "Enchantment Transferrer Used",
+  "enchantmenttransferrering.gui.use_book": "Enchantment Transferrer Used"
 }

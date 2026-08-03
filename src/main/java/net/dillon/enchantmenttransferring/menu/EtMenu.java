@@ -2,8 +2,9 @@ package net.dillon.enchantmenttransferring.menu;
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.dillon.enchantmenttransferring.block.ModBlocks;
+import net.dillon.enchantmenttransferring.sound.ModSoundEvents;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.core.Holder;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -18,83 +19,64 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Screen and enchantment transferring handling for the {@code Enchantment Transferrer block.}
- */
-public class EnchantmentTransferrerMenu extends ItemCombinerMenu {
+public class EtMenu extends ItemCombinerMenu {
     private final DataSlot levelCost = DataSlot.standalone(); // Level cost variable
-    private final Map<Holder, Integer> enchantmentsToRemove = new HashMap<>(); // List of enchantments to remove from the item, with their respective level
+    private final Map<Holder<Enchantment>, Integer> enchantmentsToRemove = new HashMap<>(); // List of enchantments to remove from the item, with their respective level
     private final Map<Object2IntMap.Entry<Holder<Enchantment>>, Integer> enchantmentsToTransfer = new HashMap<>(); // List of enchantments to transfer over, with their respective level (mapped)
 
-    /**
-     * Constructor for registering this screen handler.
-     */
-    public EnchantmentTransferrerMenu(int syncId, Inventory inventory) {
+    public EtMenu(int syncId, Inventory inventory) {
         this(syncId, inventory, ContainerLevelAccess.NULL);
     }
 
-    /**
-     * Base constructor.
-     */
-    public EnchantmentTransferrerMenu(int syncId, Inventory inventory, ContainerLevelAccess context) {
+    public EtMenu(int syncId, Inventory inventory, ContainerLevelAccess context) {
         super(ModMenus.ENCHANTMENT_TRANSFERRER, syncId, inventory, context, getForgingSlotsManager());
         this.addDataSlot(this.levelCost);
     }
 
-    /**
-     * Copied over from {@link AnvilMenu}. Sets the slot's position on the screen.
-     */
-    private static ItemCombinerMenuSlotDefinition getForgingSlotsManager() {
-        return ItemCombinerMenuSlotDefinition.create()
-                .withSlot(0, 27, 47, stack -> true) // Enchanted tool
-                .withSlot(1, 76, 47, stack -> true) // Tool to transfer to
-                .withResultSlot(2, 134, 47).build(); // Output
-    }
-
-    /**
-     * This screen can only be opened with a {@code Enchantment Transferrer.}
-     */
     @Override
     protected boolean isValidBlock(BlockState state) {
         return state.is(ModBlocks.ENCHANTMENT_TRANSFERRER);
     }
 
-    /**
-     * Determines if the player can take the outputted item.
-     * <p>In this case, if the player is in creative mode or if they have enough levels.</p>
-     */
     @Override
     protected boolean mayPickup(Player player, boolean present) {
-        return (player.hasInfiniteMaterials() || player.experienceLevel >= this.levelCost.get()) && this.levelCost.get() > 0;
+        return (player.hasInfiniteMaterials() || player.experienceLevel >= this.levelCost.get());
     }
 
-    /**
-     * Refresh the slots and give the player the item.
-     */
+    private static ItemCombinerMenuSlotDefinition getForgingSlotsManager() {
+        return ItemCombinerMenuSlotDefinition.create()
+                .withSlot(0, 27, 37, stack -> stack.is(ConventionalItemTags.ENCHANTABLES))
+                .withSlot(1, 76, 37, stack -> stack.is(ConventionalItemTags.ENCHANTABLES) || stack.is(Items.BOOK))
+                .withSlot(2, 76, 60, stack -> stack.is(Items.DIAMOND))
+                .withResultSlot(3, 134, 37).build();
+    }
+
     @Override
     public void onTake(Player player, ItemStack stack) {
         if (!player.getAbilities().instabuild) {
             player.giveExperienceLevels(-this.levelCost.get());
         }
 
-        ItemStack newSlot1 = this.inputSlots.getItem(0);
+        ItemStack newSlot1 = this.inputSlots.getItem(this.getInputSlot().index);
         // Remove the enchantment from the main hand item if it was transferred/upgraded to the offhand
-        for (Holder registryEntry : enchantmentsToRemove.keySet()) {
+        for (Holder<Enchantment> registryEntry : this.enchantmentsToRemove.keySet()) {
             EnchantmentHelper.updateEnchantments(newSlot1, builder -> builder.removeIf(enchantmentRegistryEntry -> enchantmentRegistryEntry.equals(registryEntry)));
         }
-        this.inputSlots.setItem(0, newSlot1);
-        this.inputSlots.setItem(1, ItemStack.EMPTY);
-        this.success(player);
+        this.inputSlots.setItem(this.getInputSlot().index, newSlot1);
+        boolean book = this.inputSlots.getItem(this.getTransferToSlot().index).is(Items.BOOK);
+        if (book) {
+            this.inputSlots.setItem(this.getTransferToSlot().index, this.decrementedStack(this.inputSlots.getItem(this.getTransferToSlot().index).copy()));
+        } else {
+            this.inputSlots.setItem(this.getTransferToSlot().index, ItemStack.EMPTY);
+            this.inputSlots.setItem(this.getDiamondSlot().index, this.decrementedStack(this.inputSlots.getItem(this.getDiamondSlot().index).copy()));
+        }
+        this.success(player, book);
     }
 
-    /**
-     * Handles transferring enchantments.
-     * <p>See additional comments inside of this method for more documentation.</p>
-     */
     @Override
     public void createResult() {
-        ItemStack firstSlot = this.inputSlots.getItem(0); // Get the stack in the first slot
-        ItemStack secondSlot = this.inputSlots.getItem(1); // Get the stack in the second slot
+        ItemStack firstSlot = this.inputSlots.getItem(this.getInputSlot().index); // Get the stack in the first slot
+        ItemStack secondSlot = this.inputSlots.getItem(this.getTransferToSlot().index); // Get the stack in the second slot
         ItemEnchantments slot1Enchantments = EnchantmentHelper.getEnchantmentsForCrafting(firstSlot); // Enchantments on first slot stack
         ItemEnchantments slot2Enchantments = EnchantmentHelper.getEnchantmentsForCrafting(secondSlot); // Enchantments on second slot stack
         ItemEnchantments.Mutable firstSlotBuilder = new ItemEnchantments.Mutable(slot1Enchantments); // Build enchantments component on first slot
@@ -105,18 +87,18 @@ public class EnchantmentTransferrerMenu extends ItemCombinerMenu {
         this.enchantmentsToTransfer.clear(); // Reset enchantments to transfer
         this.enchantmentsToRemove.clear(); // Reset enchantments to remove
 
-        // If slot 1 or 2 is empty, OR is of enchanted book, make sure nothing is returned
-        if (firstSlot.isEmpty() || secondSlot.isEmpty() || firstSlot.is(Items.ENCHANTED_BOOK) || secondSlot.is(Items.ENCHANTED_BOOK)) {
+        // If slot 1 or 2 is empty, make sure nothing is returned
+        if (firstSlot.isEmpty() || secondSlot.isEmpty()) {
             return;
         }
 
         // Run through all enchantments in the first slot
         for (Object2IntMap.Entry<Holder<Enchantment>> entry : slot1Enchantments.entrySet()) {
-            Holder registryEntry = entry.getKey();
-            Enchantment enchantment = (Enchantment)registryEntry.value();
+            Holder<Enchantment> registryEntry = entry.getKey();
+            Enchantment enchantment = registryEntry.value();
 
             // If second slot has no enchantments, and the enchantment wanting to be transferred is acceptable, transfer the enchantment
-            if (!secondSlot.isEnchanted() && enchantment.canEnchant(secondSlot)) {
+            if (!secondSlot.isEnchanted() && enchantment.canEnchant(secondSlot) || secondSlot.is(Items.BOOK)) {
                 enchantmentsToTransfer.put(entry, firstSlotBuilder.getLevel(entry.getKey()));
                 enchantmentsToRemove.put(entry.getKey(), firstSlotBuilder.getLevel(entry.getKey()));
                 this.broadcastChanges();
@@ -133,15 +115,18 @@ public class EnchantmentTransferrerMenu extends ItemCombinerMenu {
                     }
 
                     // Determines if an enchantment in second slot can be upgraded to a higher level
-                    boolean alreadyPresentButUpgradable = registryEntry2.equals(registryEntry) && secondSlotBuilder.getLevel(registryEntry2) < firstSlotBuilder.getLevel(registryEntry);
+                    boolean alreadyPresentButUpgradable = registryEntry2.equals(registryEntry) && secondSlotBuilder.getLevel(registryEntry2) <= firstSlotBuilder.getLevel(registryEntry);
 
                     // If all enchantments are compatible with each other and can be combined, OR can be upgraded
                     // Try to transfer enchantments
                     if ((allIsCompatible && enchantment.canEnchant(secondSlot)) || alreadyPresentButUpgradable) {
-                        if (secondSlotBuilder.getLevel(entry.getKey()) != enchantment.getMaxLevel() // ensure enchantment isn't already at max level; if it is then ignore transferring
-                                && firstSlotBuilder.getLevel(entry.getKey()) != secondSlotBuilder.getLevel(entry.getKey()) // ensure first slot enchantment level isn't the same as second slot enchantment level
-                                && secondSlotBuilder.getLevel(entry.getKey()) < firstSlotBuilder.getLevel(entry.getKey())) { // ensure first slot enchantment level isn't less than the second slot enchantment level
-                            enchantmentsToTransfer.put(entry, firstSlotBuilder.getLevel(entry.getKey()));
+                        int slotBuilder = firstSlotBuilder.getLevel(entry.getKey());
+                        int maxLevel = enchantment.getMaxLevel();
+
+                        if (secondSlotBuilder.getLevel(entry.getKey()) <= slotBuilder) {
+                            int newLevel = secondSlotBuilder.getLevel(entry.getKey()) == slotBuilder ? slotBuilder + 1 : slotBuilder;
+                            newLevel = Math.min(newLevel, maxLevel);
+                            enchantmentsToTransfer.put(entry, newLevel);
                             enchantmentsToRemove.put(entry.getKey(), firstSlotBuilder.getLevel(entry.getKey()));
                             this.broadcastChanges();
                         }
@@ -152,8 +137,9 @@ public class EnchantmentTransferrerMenu extends ItemCombinerMenu {
 
         // Applies the transferred enchantments to the output item.
         ItemStack output = secondSlot.copy(); // Copy second slot stack
-        // Total transferred enchantments equals the number of enchantments to transfer (map cannot contain duplicates, so the size is correct)
-        int totalTransferredEnchantments = enchantmentsToTransfer.size();
+        if (secondSlot.is(Items.BOOK)) { // Make output enchanted book if transferring enchantments to a book
+            output = new ItemStack(Items.ENCHANTED_BOOK);
+        }
         // Run through all enchantments to transfer
         for (Object2IntMap.Entry<Holder<Enchantment>> entry : enchantmentsToTransfer.keySet()) {
             int firstSlotLevel = firstSlotBuilder.getLevel(entry.getKey());
@@ -162,8 +148,9 @@ public class EnchantmentTransferrerMenu extends ItemCombinerMenu {
             // Check if second slot already has the enchantment
             if (secondSlotLevel > 0) {
                 // If second slot has a lower level, upgrade it
-                if (secondSlotLevel < firstSlotLevel) {
-                    EnchantmentHelper.updateEnchantments(output, builder -> builder.upgrade(entry.getKey(), firstSlotLevel));
+                if (secondSlotLevel <= firstSlotLevel) {
+                    EnchantmentHelper.updateEnchantments(output, builder -> builder.upgrade(entry.getKey(),
+                            secondSlotLevel == firstSlotLevel ? firstSlotLevel + 1 : firstSlotLevel));
                 }
                 // No further action needed if the levels are equal or second slot has a higher level
             } else {
@@ -171,6 +158,8 @@ public class EnchantmentTransferrerMenu extends ItemCombinerMenu {
                 EnchantmentHelper.updateEnchantments(output, builder -> builder.upgrade(entry.getKey(), firstSlotLevel));
             }
         }
+        // Total transferred enchantments equals the number of enchantments to transfer (map cannot contain duplicates, so the size is correct)
+        int totalTransferredEnchantments = enchantmentsToTransfer.size();
         int cost = 0; // Cost variable (initially set to 0).
         double outputDurability = output.getMaxDamage() - output.getDamageValue(); // New outputDurability amount
         if (totalTransferredEnchantments > 0) { // as long as at least one enchantment is transferred...
@@ -183,23 +172,49 @@ public class EnchantmentTransferrerMenu extends ItemCombinerMenu {
             }
             // Set damage to output durability
             int newOutputDamage = output.getMaxDamage() - (int)outputDurability;
-            output.setDamageValue(Mth.clamp(newOutputDamage, 0, output.getMaxDamage()));
+            if (!this.getDiamondSlot().hasItem()) {
+                output.setDamageValue(Mth.clamp(newOutputDamage, 0, output.getMaxDamage()));
+            } else if (!this.getTransferToSlot().getItem().is(Items.BOOK)) {
+                cost += totalTransferredEnchantments * 2;
+            }
+
+            // Cannot transfer over 40 levels
+            if (cost >= 40) {
+                return;
+            }
+
             this.resultSlots.setItem(0, output); // Set the output
             this.levelCost.set(cost); // Set the cost
         }
     }
 
-    /**
-     * A successful enchantment transfer.
-     */
-    private void success(Player player) {
-        player.playSound(SoundEvents.SMITHING_TABLE_USE, 1.0F, this.player.getRandom().nextFloat() * 0.1F + 0.9F);
+    private void success(Player player, boolean book) {
+        player.playSound(book ? ModSoundEvents.ENCHANTMENT_TRANSFERRER_USE_BOOK : ModSoundEvents.ENCHANTMENT_TRANSFERRER_USE_TRANSFER, 1.0F, this.player.getRandom().nextFloat() * 0.1F + 0.9F);
         player.giveExperienceLevels(this.levelCost.get());
     }
 
-    /**
-     * Returns the current level cost.
-     */
+    private ItemStack decrementedStack(ItemStack s) {
+        ItemStack decrementedStack = s.copy();
+        decrementedStack.shrink(1);
+        return decrementedStack;
+    }
+
+    public Slot getInputSlot() {
+        return this.getSlot(0);
+    }
+
+    public Slot getTransferToSlot() {
+        return this.getSlot(1);
+    }
+
+    public Slot getDiamondSlot() {
+        return this.getSlot(2);
+    }
+
+    public Slot getOutputSlot() {
+        return this.getSlot(3);
+    }
+
     public int getLevelCost() {
         return this.levelCost.get();
     }

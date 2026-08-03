@@ -8,8 +8,8 @@ public class EnchantmentTransferringDataGenerator implements DataGeneratorEntryp
 	@Override
 	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
+
         pack.addProvider(ModBlockLootTableGenerator::new);
         pack.addProvider(ModBlockTagGenerator::new);
-        pack.addProvider(ModModelGenerator::new);
 	}
 }

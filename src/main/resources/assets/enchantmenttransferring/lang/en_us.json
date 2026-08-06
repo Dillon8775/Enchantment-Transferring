@@ -1,9 +1,7 @@
 {
   "itemGroup.enchantmenttransferring.enchantment_transferring_item_group": "Enchantment Transferring",
 
-  "enchantment_transferring_item_group": "Enchantment Transferring",
   "block.enchantmenttransferring.enchantment_transferrer": "Enchantment Transferrer",
-
   "block.enchantmenttransferring.cost": "Cost: %s",
   "block.enchantmenttransferring.enchanted_tool": "Add item with enchantments that you want to transfer over.",
   "block.enchantmenttransferring.unenchanted_tool_or_book": "Add item (or book) that you want to transfer enchantments to.",

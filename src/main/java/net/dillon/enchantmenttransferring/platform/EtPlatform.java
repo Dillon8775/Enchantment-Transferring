@@ -1,11 +1,11 @@
 package net.dillon.enchantmenttransferring.platform;
 
-import net.dillon.dillonlib.core.DillonLibMain;
 import net.dillon.dillonlib.platform.ModPlatform;
 import net.dillon.dillonlib.platform.Platforms;
 import net.dillon.dillonlib.platform.info.LogoWidth;
 import net.dillon.dillonlib.platform.info.PlatformName;
 import net.dillon.dillonlib.platform.info.PlatformRelease;
+import net.dillon.enchantmenttransferring.helper.ModConstants;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -13,17 +13,17 @@ public class EtPlatform extends ModPlatform {
 
     @Override
     public String modId() {
-        return DillonLibMain.MOD_ID;
+        return ModConstants.MOD_ID;
     }
 
     @Override
     public @NotNull Logger logger() {
-        return DillonLibMain.LOGGER;
+        return ModConstants.LOGGER;
     }
 
     @Override
     public String modVersion() {
-        return Platforms.getCommonPlatform().commonModVersion(DillonLibMain.MOD_ID);
+        return Platforms.getCommonPlatform().commonModVersion(ModConstants.MOD_ID);
     }
 
     @Override

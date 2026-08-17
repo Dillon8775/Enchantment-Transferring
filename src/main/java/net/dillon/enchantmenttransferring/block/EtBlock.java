@@ -1,6 +1,5 @@
 package net.dillon.enchantmenttransferring.block;
 
-import com.mojang.serialization.MapCodec;
 import net.dillon.enchantmenttransferring.entity.EtBlockEntity;
 import net.dillon.enchantmenttransferring.entity.ModBlockEntityTypes;
 import net.dillon.enchantmenttransferring.menu.EtMenu;
@@ -26,16 +25,10 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 public class EtBlock extends BaseEntityBlock {
-    public static final MapCodec<EtBlock> CODEC = simpleCodec(EtBlock::new);
     private static final VoxelShape SHAPE = Block.column(16.0, 0.0, 12.0);
 
     public EtBlock(Properties settings) {
         super(settings);
-    }
-
-    @Override
-    protected @NonNull MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
     }
 
     @Override

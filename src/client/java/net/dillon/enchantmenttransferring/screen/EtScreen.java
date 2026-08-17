@@ -14,7 +14,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.NonNull;
-import org.lwjgl.glfw.GLFW;
+import org.lwjgl.sdl.SDLKeycode;
 
 import java.util.List;
 import java.util.Optional;
@@ -101,7 +101,7 @@ public class EtScreen extends ItemCombinerScreen<EtMenu> {
 
     @Override
     public boolean keyPressed(KeyEvent input) {
-        if (input.key() == GLFW.GLFW_KEY_ESCAPE) {
+        if (input.key() == SDLKeycode.SDLK_ESCAPE) {
             this.minecraft.player.closeContainer();
         }
 

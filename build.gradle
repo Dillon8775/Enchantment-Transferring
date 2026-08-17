@@ -61,7 +61,7 @@ dependencies {
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
 	// DillonLib.
-	implementation "maven.modrinth:dillon-lib:${project.dillonlib_dependency}"
+	implementation "maven.modrinth:dillon-lib:${project.mc_version}-${project.dillonlib_version}-fabric"
 }
 
 processResources {

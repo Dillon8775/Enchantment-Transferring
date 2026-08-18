@@ -3,7 +3,6 @@ import net.darkhax.curseforgegradle.TaskPublishCurseForge
 plugins {
 	id 'net.fabricmc.fabric-loom' version "${loom_version}"
 	id 'maven-publish'
-
 	alias libs.plugins.curseForgeGradle apply(true)
 	alias libs.plugins.modrinthMinotaur apply(true)
 }
@@ -11,27 +10,11 @@ plugins {
 version = project.mod_version
 group = project.maven_group
 
-def modVersion = project.mod_version.toString()
-def modVersionWithoutSuffix = modVersion.contains("_") ? modVersion.substring(0, modVersion.indexOf("_")) : modVersion
+apply from: 'repositories.gradle'
+apply from: 'dependencies.gradle'
+apply from: 'resources.gradle'
 
-repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
-	exclusiveContent {
-		forRepository {
-			maven {
-				name = "Modrinth"
-				url = "https://api.modrinth.com/maven"
-			}
-		}
-		filter {
-			includeGroup "maven.modrinth"
-		}
-	}
-}
+def modVersionWithoutSuffix = project.extensions.getByName("modVersionWithoutSuffix")
 
 loom {
 	splitEnvironmentSourceSets()
@@ -43,36 +26,35 @@ loom {
 		}
 	}
 
+	def aw = project.file("src/main/resources/${mod_id}.accessWidener")
+	if (aw.exists()) {
+		accessWidenerPath.set(aw)
+	}
+	mixin {
+		defaultRefmapName.set("${mod_id}.refmap.json")
+	}
+
+	runs {
+		client {
+			client()
+			setConfigName('Minecraft Client')
+			ideConfigGenerated(true)
+			runDir('run')
+
+			vmArgs.add("-Ddevauth.enabled=1")
+		}
+		server {
+			server()
+			setConfigName('Minecraft Server')
+			ideConfigGenerated(true)
+			runDir('run')
+		}
+	}
 }
 
 fabricApi {
 	configureDataGeneration {
 		client = true
-	}
-}
-
-dependencies {
-	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	
-	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
-
-	// DillonLib.
-	implementation "maven.modrinth:dillon-lib:${project.mc_version}-${project.dillonlib_version}-fabric"
-}
-
-processResources {
-	inputs.property "mod_version", modVersionWithoutSuffix
-	inputs.property "mc_version", project.mc_version
-	inputs.property "dillonlib_version", project.dillonlib_version
-
-	filesMatching("fabric.mod.json") {
-		expand "mod_version": modVersionWithoutSuffix,
-				"mc_version": project.mc_version,
-				"dillonlib_version": project.dillonlib_version
 	}
 }
 

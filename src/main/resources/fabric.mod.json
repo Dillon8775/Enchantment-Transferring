@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "enchantmenttransferring",
+  "id": "${mod_id}",
   "version": "${mod_version}+${mc_version}",
   "name": "Enchantment Transferring",
   "description": "Transfer enchantments from one item, to another!",
@@ -30,9 +30,9 @@
     "enchantmenttransferring.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.19.3",
-    "minecraft": ">=26.3-alpha.1",
-    "java": ">=25",
+    "fabricloader": ">=${fabric_loader_version}",
+    "minecraft": "${minecraft_version_range}",
+    "java": ">=${java_version}",
     "fabric-api": "*",
     "dillonlib": ">=${dillonlib_version}"
   },

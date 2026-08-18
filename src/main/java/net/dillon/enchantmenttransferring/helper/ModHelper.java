@@ -6,7 +6,7 @@ import static net.dillon.enchantmenttransferring.helper.ModConstants.MOD_ID;
 
 public class ModHelper {
 
-    public static Identifier ofEnchantmentTransferring(String id) {
+    public static Identifier etIdentifier(String id) {
         return Identifier.fromNamespaceAndPath(MOD_ID, id);
     }
 }

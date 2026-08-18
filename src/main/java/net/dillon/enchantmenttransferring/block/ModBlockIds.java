@@ -3,13 +3,13 @@ package net.dillon.enchantmenttransferring.block;
 import net.minecraft.references.BlockItemId;
 import net.minecraft.resources.Identifier;
 
-import static net.dillon.enchantmenttransferring.helper.ModHelper.ofEnchantmentTransferring;
+import static net.dillon.enchantmenttransferring.helper.ModHelper.etIdentifier;
 
 public class ModBlockIds {
     public static final BlockItemId ENCHANTMENT_TRANSFERRER = create("enchantment_transferrer");
 
     private static BlockItemId create(final String name) {
-        Identifier id = ofEnchantmentTransferring(name);
+        Identifier id = etIdentifier(name);
         return BlockItemId.create(id, id);
     }
 }

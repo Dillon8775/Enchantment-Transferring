@@ -19,12 +19,12 @@ import org.lwjgl.sdl.SDLKeycode;
 import java.util.List;
 import java.util.Optional;
 
-import static net.dillon.enchantmenttransferring.helper.ModHelper.ofEnchantmentTransferring;
+import static net.dillon.enchantmenttransferring.helper.ModHelper.etIdentifier;
 import static net.minecraft.resources.Identifier.withDefaultNamespace;
 
 public class EtScreen extends ItemCombinerScreen<EtMenu> {
     private static final Identifier ERROR_TEXTURE = withDefaultNamespace("container/anvil/error");
-    private static final Identifier TEXTURE = ofEnchantmentTransferring("textures/gui/container/enchantment_transferrer.png");
+    private static final Identifier TEXTURE = etIdentifier("textures/gui/container/enchantment_transferrer.png");
     private static final Identifier DIAMOND = withDefaultNamespace("container/slot/diamond");
     private final Player player;
     private static final List<Identifier> SLOT_TEXTURES = List.of(

@@ -41,7 +41,7 @@ loom {
 			ideConfigGenerated(true)
 			runDir('run')
 
-			vmArgs.add("-Ddevauth.enabled=1")
+			vmArgs.add("-Ddevauth.enabled=" + "${devauth_enabled}")
 		}
 		server {
 			server()

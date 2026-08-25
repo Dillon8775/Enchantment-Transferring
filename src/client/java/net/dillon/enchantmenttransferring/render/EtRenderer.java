@@ -54,8 +54,8 @@ public class EtRenderer implements BlockEntityRenderer<EtBlockEntity, EtRenderSt
 		poseStack.translate(0.5F, 0.75F, 0.5F);
 		poseStack.translate(0.0F, 0.1F + Mth.sin(state.time * 0.1F) * 0.01F, 0.0F);
 		float yRot = state.yRot;
-		poseStack.mulPose(Axis.YP.rotation(-yRot));
-		poseStack.mulPose(Axis.ZP.rotationDegrees(80.0F));
+		poseStack.rotate(Axis.YP, -yRot);
+		poseStack.rotateDegrees(Axis.ZP, 80.0F);
 		float ff1 = Mth.frac(state.flip + 0.25F) * 1.6F - 0.3F;
 		float ff2 = Mth.frac(state.flip + 0.75F) * 1.6F - 0.3F;
 		BookModel.State bookState = BookModel.State.forAnimation(state.time, Mth.clamp(ff1, 0.0F, 1.0F), Mth.clamp(ff2, 0.0F, 1.0F), state.open);

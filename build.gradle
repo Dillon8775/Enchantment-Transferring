@@ -1,8 +1,8 @@
 import net.darkhax.curseforgegradle.TaskPublishCurseForge
 
 plugins {
-	id 'net.fabricmc.fabric-loom' version "${loom_version}"
 	id 'maven-publish'
+	alias libs.plugins.fabricLoom apply (true)
 	alias libs.plugins.curseForgeGradle apply(true)
 	alias libs.plugins.modrinthMinotaur apply(true)
 }
@@ -37,17 +37,15 @@ loom {
 	runs {
 		client {
 			client()
-			setConfigName('Minecraft Client')
-			ideConfigGenerated(true)
-			runDir('run')
+			getDisplayName().set('Fabric Client')
+			getGenerateRunConfig().set(true)
 
-			vmArgs.add("-Ddevauth.enabled=" + "${devauth_enabled}")
+			jvmArguments.add("-Ddevauth.enabled=" + "${devauth_enabled}")
 		}
 		server {
 			server()
-			setConfigName('Minecraft Server')
-			ideConfigGenerated(true)
-			runDir('run')
+			getDisplayName().set('Fabric Server')
+			getGenerateRunConfig().set(true)
 		}
 	}
 }

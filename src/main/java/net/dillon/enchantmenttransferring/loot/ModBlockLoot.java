@@ -1,4 +1,4 @@
-package net.dillon.enchantmenttransferring.datagen;
+package net.dillon.enchantmenttransferring.loot;
 
 import net.dillon.enchantmenttransferring.block.ModBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
@@ -7,9 +7,9 @@ import net.minecraft.core.HolderLookup;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ModBlockLootTableGenerator extends FabricBlockLootSubProvider {
+public class ModBlockLoot extends FabricBlockLootSubProvider {
 
-    protected ModBlockLootTableGenerator(FabricPackOutput packOutput, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+    public ModBlockLoot(FabricPackOutput packOutput, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(packOutput, registriesFuture);
     }
 

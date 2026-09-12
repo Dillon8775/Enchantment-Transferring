@@ -1,4 +1,4 @@
-package net.dillon.enchantmenttransferring.datagen;
+package net.dillon.enchantmenttransferring.render;
 
 import net.dillon.enchantmenttransferring.block.ModBlocks;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
@@ -7,9 +7,9 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import org.jspecify.annotations.NonNull;
 
-public class ModModelGenerator extends FabricModelProvider {
+public class ModModelProviders extends FabricModelProvider {
 
-    public ModModelGenerator(FabricPackOutput output) {
+    public ModModelProviders(FabricPackOutput output) {
         super(output);
     }
 

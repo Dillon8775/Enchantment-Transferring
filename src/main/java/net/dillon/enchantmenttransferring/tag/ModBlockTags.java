@@ -1,4 +1,4 @@
-package net.dillon.enchantmenttransferring.datagen;
+package net.dillon.enchantmenttransferring.tag;
 
 import net.dillon.enchantmenttransferring.block.ModBlockIds;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
@@ -9,9 +9,9 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ModBlockTagGenerator extends FabricTagsProvider.BlockTagsProvider {
+public class ModBlockTags extends FabricTagsProvider.BlockTagsProvider {
 
-    public ModBlockTagGenerator(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registryLookupFuture) {
+    public ModBlockTags(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registryLookupFuture) {
         super(output, registryLookupFuture);
     }
 

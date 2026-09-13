@@ -2,19 +2,22 @@ import net.darkhax.curseforgegradle.TaskPublishCurseForge
 
 plugins {
 	id 'maven-publish'
+
 	alias libs.plugins.fabricLoom apply (true)
 	alias libs.plugins.curseForgeGradle apply(true)
 	alias libs.plugins.modrinthMinotaur apply(true)
 }
 
-version = project.mod_version
+version = project.mod_version+"_fabric-"+project.mc_version
 group = project.maven_group
+
+tasks.named('jar', Jar) {
+	archiveFileName.set("${mod_id}-${mod_version}_fabric-mc${minecraft_version}.jar")
+}
 
 apply from: 'repositories.gradle'
 apply from: 'dependencies.gradle'
 apply from: 'resources.gradle'
-
-def modVersionWithoutSuffix = project.extensions.getByName("modVersionWithoutSuffix")
 
 loom {
 	splitEnvironmentSourceSets()
@@ -108,7 +111,7 @@ tasks.register('curseforge', TaskPublishCurseForge) {
 	}
 	if (projectId) {
 		def mainFile = upload(findProperty("curseforge_project_id"), tasks.named("jar", Jar).get().archiveFile.get().asFile)
-		mainFile.displayName = "[${mc_version.substring(2)}] $mod_name ${modVersionWithoutSuffix}"
+		mainFile.displayName = "[${mc_version.substring(2)}] $mod_name ${modVersion}"
 		mainFile.changelog = rootProject.file("${changelog_file}").text
 		mainFile.addRequirement("fabric-api")
 		mainFile.addRequirement("dillonlib")
@@ -129,8 +132,8 @@ modrinth {
 	token = project.findProperty("modrinth.token") ?: System.getenv("MODRINTH_TOKEN") ?: "none"
 	projectId = findProperty("modrinth_project_id")
 
-	versionNumber = modVersionWithoutSuffix
-	versionName = "[mc${minecraft_version}] ${mod_name} ${modVersionWithoutSuffix}"
+	versionNumber = modVersion
+	versionName = "[mc${minecraft_version}] ${mod_name} ${modVersion}"
 
 	uploadFile = tasks.named("jar")
 	def changelogFile = rootProject.file("${changelog_file}")

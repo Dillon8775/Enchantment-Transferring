@@ -149,4 +149,5 @@ modrinth {
 		required.project "fabric-api"
 		required.project "dillon-lib"
 	}
+	environment = "client_and_server"
 }

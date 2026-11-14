@@ -8,6 +8,8 @@ import net.dillon.enchantmenttransferring.menu.ModMenus;
 import net.dillon.enchantmenttransferring.sound.ModSoundEvents;
 import net.fabricmc.api.ModInitializer;
 
+import static net.dillon.enchantmenttransferring.helper.ModConstants.MOD_INFO;
+
 public class EtInitializer implements ModInitializer {
 
     @Override
@@ -19,6 +21,6 @@ public class EtInitializer implements ModInitializer {
         ModItems.initItems();
         ModItemGroups.initModItemGroups();
 
-        ModConstants.LOGGER.info("Enchantment Transferring version {} (for fabric) loaded successfully!", ModConstants.VERSION);
+        ModConstants.LOGGER.info("Enchantment Transferring version {} (for fabric) loaded successfully!", MOD_INFO.version().getString());
     }
 }

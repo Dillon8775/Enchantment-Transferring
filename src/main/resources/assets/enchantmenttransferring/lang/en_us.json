@@ -1,5 +1,5 @@
 {
-  "itemGroup.enchantmenttransferring.enchantment_transferring_item_group": "Enchantment Transferring",
+  "enchantmenttransferring": "Enchantment Transferring",
 
   "block.enchantmenttransferring.enchantment_transferrer": "Enchantment Transferrer",
   "block.enchantmenttransferring.cost": "Cost: %s",

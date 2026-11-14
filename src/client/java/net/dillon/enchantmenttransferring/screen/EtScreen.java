@@ -1,6 +1,5 @@
 package net.dillon.enchantmenttransferring.screen;
 
-import net.dillon.dillonlib.util.CommonSprites;
 import net.dillon.enchantmenttransferring.menu.EtMenu;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -19,6 +18,7 @@ import org.lwjgl.sdl.SDLKeycode;
 import java.util.List;
 import java.util.Optional;
 
+import static net.dillon.enchantmenttransferring.helper.ModConstants.MOD_INFO;
 import static net.dillon.enchantmenttransferring.helper.ModHelper.etIdentifier;
 import static net.minecraft.resources.Identifier.withDefaultNamespace;
 
@@ -28,25 +28,25 @@ public class EtScreen extends ItemCombinerScreen<EtMenu> {
     private static final Identifier DIAMOND = withDefaultNamespace("container/slot/diamond");
     private final Player player;
     private static final List<Identifier> SLOT_TEXTURES = List.of(
-            slotTexture("axe"),
-            slotTexture("boots"),
-            slotTexture("chestplate"),
-            slotTexture("sword"),
-            slotTexture("hoe"),
-            slotTexture("pickaxe"),
-            slotTexture("leggings"),
-            slotTexture("shovel"),
-            slotTexture("spear")
+            mcSlotTexture("axe"),
+            mcSlotTexture("boots"),
+            mcSlotTexture("chestplate"),
+            mcSlotTexture("sword"),
+            mcSlotTexture("hoe"),
+            mcSlotTexture("pickaxe"),
+            mcSlotTexture("leggings"),
+            mcSlotTexture("shovel"),
+            mcSlotTexture("spear")
     );
     private static final List<Identifier> TRANSFER_SLOT_TEXTURES = List.of(
-            CommonSprites.BOOK,
-            slotTexture("axe"),
-            slotTexture("boots"),
-            slotTexture("sword"),
-            slotTexture("pickaxe")
+            etSlotTexture("book"),
+            mcSlotTexture("axe"),
+            mcSlotTexture("boots"),
+            mcSlotTexture("sword"),
+            mcSlotTexture("pickaxe")
     );
     private static final List<Identifier> OUTPUT_SLOT_TEXTURES = List.of(
-            CommonSprites.ENCHANTED_BOOK
+            etSlotTexture("enchanted_book")
     );
     private final CyclingSlotBackground inputSlotIcon = new CyclingSlotBackground(this.menu.getInputSlot().index);
     private final CyclingSlotBackground transferToSlotIcon = new CyclingSlotBackground(this.menu.getTransferToSlot().index);
@@ -59,8 +59,16 @@ public class EtScreen extends ItemCombinerScreen<EtMenu> {
         this.player = inventory.player;
     }
 
-    private static Identifier slotTexture(String name) {
-        return withDefaultNamespace("container/slot/" + name);
+    private static Identifier slotTexture(String namespace, String name) {
+        return Identifier.fromNamespaceAndPath(namespace, "container/slot/" + name);
+    }
+
+    private static Identifier etSlotTexture(String name) {
+        return slotTexture(MOD_INFO.id(), name);
+    }
+
+    private static Identifier mcSlotTexture(String name) {
+        return slotTexture("minecraft", name);
     }
 
     @Override

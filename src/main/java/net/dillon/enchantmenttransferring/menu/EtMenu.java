@@ -173,7 +173,7 @@ public class EtMenu extends ItemCombinerMenu {
             // Set damage to output durability
             int newOutputDamage = output.getMaxDamage() - (int)outputDurability;
             if (!this.getDiamondSlot().hasItem()) {
-                output.setDamageValue(Mth.clamp(newOutputDamage, 0, output.getMaxDamage()));
+                output.setDamageValue((int)(Mth.clampedLerp(newOutputDamage, 0, output.getMaxDamage())));
             } else if (!this.getTransferToSlot().getItem().is(Items.BOOK)) {
                 cost += totalTransferredEnchantments * 2;
             }

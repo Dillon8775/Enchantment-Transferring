@@ -1,12 +1,13 @@
 package net.dillon.enchantmenttransferring.screen;
 
+import net.dillon.dillonlib.client.component.TextureBuilder;
 import net.dillon.enchantmenttransferring.menu.EtMenu;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.inventory.SlotWidget;
 import net.minecraft.client.gui.screens.inventory.CyclingSlotBackground;
 import net.minecraft.client.gui.screens.inventory.ItemCombinerScreen;
 import net.minecraft.client.input.KeyEvent;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
@@ -82,10 +83,11 @@ public class EtScreen extends ItemCombinerScreen<EtMenu> {
     private void renderSlotTooltip(GuiGraphicsExtractor context, int mouseX, int mouseY) {
         Optional<Component> optional = Optional.empty();
 
-        if (this.hoveredSlot != null) {
-            ItemStack focusedSlotStack = this.hoveredSlot.getItem();
+        SlotWidget hoveredSlot = this.getHoveredSlot();
+        if (hoveredSlot != null) {
+            ItemStack focusedSlotStack = hoveredSlot.slot().getItem();
             if (focusedSlotStack.isEmpty()) {
-                switch (this.hoveredSlot.index) {
+                switch (hoveredSlot.slot().index) {
                     case 0 -> optional = Optional.of(Component.translatable("block.enchantmenttransferring.enchanted_tool").withStyle(ChatFormatting.AQUA));
                     case 1 -> optional = Optional.of(Component.translatable("block.enchantmenttransferring.unenchanted_tool_or_book").withStyle(ChatFormatting.LIGHT_PURPLE));
                     case 2 -> optional = Optional.of(Component.translatable("block.enchantmenttransferring.smithing_template"));
@@ -97,14 +99,14 @@ public class EtScreen extends ItemCombinerScreen<EtMenu> {
     }
 
     @Override
-    public void extractRenderState(@NonNull GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
-        this.inputSlotIcon.extractRenderState(this.menu, context, delta, this.leftPos, this.topPos);
-        this.outputSlotTextures.extractRenderState(this.menu, context, delta, this.leftPos, this.topPos);
+    public void extractRenderState(GuiGraphicsExtractor graphics) {
+        this.inputSlotIcon.extractRenderState(this.menu, graphics, this.leftPos, this.topPos);
+        this.outputSlotTextures.extractRenderState(this.menu, graphics, this.leftPos, this.topPos);
         if (this.menu.getInputSlot().hasItem()) {
-            this.transferToSlotIcon.extractRenderState(this.menu, context, delta, this.leftPos, this.topPos);
+            this.transferToSlotIcon.extractRenderState(this.menu, graphics, this.leftPos, this.topPos);
         }
-        this.renderSlotTooltip(context, mouseX, mouseY);
-        super.extractRenderState(context, mouseX, mouseY, delta);
+        this.renderSlotTooltip(graphics, graphics.mouseX(), graphics.mouseY());
+        super.extractRenderState(graphics);
     }
 
     @Override
@@ -117,9 +119,18 @@ public class EtScreen extends ItemCombinerScreen<EtMenu> {
     }
 
     @Override
-    protected void extractLabels(@NonNull GuiGraphicsExtractor context, int mouseX, int mouseY) {
-        super.extractLabels(context, mouseX, mouseY);
-        context.blitSprite(RenderPipelines.GUI_TEXTURED, DIAMOND, this.menu.getDiamondSlot().x, this.menu.getDiamondSlot().y, 16, 16);
+    protected void extractLabels(GuiGraphicsExtractor graphics) {
+        super.extractLabels(graphics);
+
+        TextureBuilder.create(
+                graphics,
+                DIAMOND,
+                this.menu.getDiamondSlot().x,
+                this.menu.getDiamondSlot().y,
+                16,
+                16
+        ).buildAndBlit(true);
+
         int i = this.menu.getLevelCost();
         if (i > 0) {
             int j = -8323296; // green
@@ -135,16 +146,23 @@ public class EtScreen extends ItemCombinerScreen<EtMenu> {
 
             if (text != null) {
                 int k = this.imageWidth - 8 - this.font.width(text) - 2;
-                context.fill(k - 2, 67, this.imageWidth - 8, 79, 1325400064);
-                context.text(this.font, text, k, 69, j);
+                graphics.fill(k - 2, 67, this.imageWidth - 8, 79, 1325400064);
+                graphics.text(this.font, text, k, 69, j);
             }
         }
     }
 
     @Override
-    protected void extractErrorIcon(@NonNull GuiGraphicsExtractor context, int x, int y) {
+    protected void extractErrorIcon(@NonNull GuiGraphicsExtractor graphics, int x, int y) {
         if ((this.menu.getSlot(this.menu.getInputSlot().index).hasItem() && this.menu.getSlot(this.menu.getTransferToSlot().index).hasItem()) && !this.menu.getSlot(this.menu.getResultSlot()).hasItem()) {
-            context.blitSprite(RenderPipelines.GUI_TEXTURED, ERROR_TEXTURE, x + 99, y + 35, 28, 21);
+            TextureBuilder.create(
+                    graphics,
+                    ERROR_TEXTURE,
+                    x + 99,
+                    y + 35,
+                    28,
+                    21
+            ).buildAndBlit(true);
         }
     }
 

@@ -2,7 +2,7 @@ package net.dillon.enchantmenttransferring.block;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.sounds.BlockSoundSets;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 
 public class ModBlocks {
@@ -12,7 +12,7 @@ public class ModBlocks {
             .instrument(NoteBlockInstrument.BASEDRUM)
             .requiresCorrectToolForDrops()
             .lightLevel((state) -> 8)
-            .sound(SoundType.STONE)
+            .sound(BlockSoundSets.STONE)
             .strength(6.5F, 1600.0F)
     );
 
